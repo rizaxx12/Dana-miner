@@ -10,15 +10,26 @@
 </head>
 <body>
   <div class="container">
-    <h1>IMR Mining</h1>
-    <h3 id="userName">Loading...</h3>
+    <h1>🚀 IMR Dashboard</h1>
+    <h3 id="userName">Memuat...</h3>
     <p><strong>Saldo:</strong> <span id="poin">0</span> IMR</p>
+    <p><strong>Kecepatan:</strong> 1000 IMR / 24 jam</p>
 
-    <div class="timer" id="timer">⏳ Checking mining status...</div>
-    <button id="startBtn" onclick="startMining()">Start Mining</button>
+    <div class="timer" id="timer">⏳ Mengecek status mining...</div>
+    <button id="startBtn" onclick="startMining()">Mulai Mining</button>
     <button id="claimBtn" onclick="claimReward()" style="display:none;">Claim +1000 IMR</button>
     <br><br>
+    <button onclick="window.location.href='withdraw.html'">Withdraw ke DANA</button>
+    <br><br>
     <button onclick="logout()">Logout</button>
+  </div>
+
+  <div class="bottom-nav">
+    <button class="active">🏠 Beranda</button>
+    <button>👥 Grup</button>
+    <button>📈 Pendapatan</button>
+    <button>⚡ Percepat</button>
+    <button onclick="window.location.href='withdraw.html'">💰 Dompet</button>
   </div>
 
   <script src="script.js"></script>
