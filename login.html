@@ -10,11 +10,12 @@
 </head>
 <body>
   <div class="container">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Glowing_node_icon.svg/120px-Glowing_node_icon.svg.png" alt="Logo" width="80">
     <h1>Login</h1>
     <input type="email" id="email" placeholder="Email" required>
     <input type="password" id="password" placeholder="Password" required>
     <button onclick="login()">Login</button>
-    <p>Don't have an account? <a href="register.html">Register</a></p>
+    <p>Don't have an account? <a href="register.html">Create Account</a></p>
   </div>
 
   <script>
@@ -22,10 +23,7 @@
       const email = document.getElementById('email').value;
       const password = document.getElementById('password').value;
 
-      const { error } = await supabase.auth.signInWithPassword({
-        email,
-        password
-      });
+      const { error } = await supabase.auth.signInWithPassword({ email, password });
 
       if (error) {
         alert(error.message);
