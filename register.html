@@ -10,13 +10,14 @@
 </head>
 <body>
   <div class="container">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Glowing_node_icon.svg/120px-Glowing_node_icon.svg.png" alt="Logo" width="80">
     <h1>Register</h1>
     <input type="text" id="fullName" placeholder="Full Name" required>
     <input type="email" id="email" placeholder="Email" required>
     <input type="password" id="password" placeholder="Password" required>
     <input type="text" id="referralCode" placeholder="Referral Code (optional)">
     <button onclick="register()">Create Account</button>
-    <p>Already have an account? <a href="login.html">Login</a></p>
+    <p>Already have an account? <a href="login.html">Log In</a></p>
   </div>
 
   <script>
@@ -26,26 +27,39 @@
       const password = document.getElementById('password').value;
       const referral = document.getElementById('referralCode').value;
 
-      const { user, error } = await supabase.auth.signUp({
-        email,
-        password
-      });
+      const { data, error } = await supabase.auth.signUp({ email, password });
 
       if (error) {
         alert(error.message);
         return;
       }
 
-      // Insert into profiles table
+      // Simpan data ke tabel profiles
       await supabase.from('profiles').insert([{
-        id: user.id,
+        id: data.user.id,
         full_name: fullName,
         referral_code: generateReferralCode(),
         invited_by: referral || null,
         poin: 0
       }]);
 
-      alert("Account created! Please login.");
+      // Tambah bonus referral jika ada
+      if (referral) {
+        const { data: inviter } = await supabase
+          .from("profiles")
+          .select("id, poin")
+          .eq("referral_code", referral)
+          .single();
+
+        if (inviter) {
+          await supabase
+            .from("profiles")
+            .update({ poin: inviter.poin + 200 })
+            .eq("id", inviter.id);
+        }
+      }
+
+      alert("Berhasil daftar! Silakan login.");
       window.location.href = "login.html";
     }
 
