@@ -1,0 +1,26 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dashboard - IMR Mining</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <script src="supabase.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h1>IMR Mining</h1>
+    <h3 id="userName">Loading...</h3>
+    <p><strong>Saldo:</strong> <span id="poin">0</span> IMR</p>
+
+    <div class="timer" id="timer">⏳ Checking mining status...</div>
+    <button id="startBtn" onclick="startMining()">Start Mining</button>
+    <button id="claimBtn" onclick="claimReward()" style="display:none;">Claim +1000 IMR</button>
+    <br><br>
+    <button onclick="logout()">Logout</button>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
