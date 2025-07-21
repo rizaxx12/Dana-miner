@@ -100,13 +100,11 @@ async function startMining() {
 }
 
 async function claimReward() {
-  // Tambah poin ke profil
   await supabase
     .from("profiles")
     .update({ poin: supabase.literal("poin + 1000") })
     .eq("id", currentUser.id);
 
-  // Tandai session sebagai claimed
   await supabase
     .from("mining_sessions")
     .update({ claimed: true })
@@ -119,4 +117,4 @@ async function claimReward() {
 async function logout() {
   await supabase.auth.signOut();
   window.location.href = "login.html";
-}
+    }
