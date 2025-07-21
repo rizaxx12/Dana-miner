@@ -1,0 +1,62 @@
+<!-- register.html -->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Register - IMR Mining</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <script src="supabase.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h1>Register</h1>
+    <input type="text" id="fullName" placeholder="Full Name" required>
+    <input type="email" id="email" placeholder="Email" required>
+    <input type="password" id="password" placeholder="Password" required>
+    <input type="text" id="referralCode" placeholder="Referral Code (optional)">
+    <button onclick="register()">Create Account</button>
+    <p>Already have an account? <a href="login.html">Login</a></p>
+  </div>
+
+  <script>
+    async function register() {
+      const fullName = document.getElementById('fullName').value;
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const referral = document.getElementById('referralCode').value;
+
+      const { user, error } = await supabase.auth.signUp({
+        email,
+        password
+      });
+
+      if (error) {
+        alert(error.message);
+        return;
+      }
+
+      // Insert into profiles table
+      await supabase.from('profiles').insert([{
+        id: user.id,
+        full_name: fullName,
+        referral_code: generateReferralCode(),
+        invited_by: referral || null,
+        poin: 0
+      }]);
+
+      alert("Account created! Please login.");
+      window.location.href = "login.html";
+    }
+
+    function generateReferralCode() {
+      const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+      let code = "";
+      for (let i = 0; i < 6; i++) {
+        code += chars.charAt(Math.floor(Math.random() * chars.length));
+      }
+      return code;
+    }
+  </script>
+</body>
+</html>
